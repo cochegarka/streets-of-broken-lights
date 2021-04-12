@@ -4,6 +4,7 @@
 
             [ring.middleware.session :refer [wrap-session]]
             [ring.middleware.params :refer [wrap-params]]
+            [ring.middleware.reload :refer [wrap-reload]]
             [ring.adapter.jetty :as jetty]
 
             [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
@@ -29,5 +30,6 @@
       (wrap-authentication $ auth-backend)
       (wrap-params $)
       (wrap-session $)
+      (wrap-reload $)
       (jetty/run-jetty $ {:port 8080 :join? false}))))
 

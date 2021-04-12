@@ -13,7 +13,7 @@
         found-password (get authdata (keyword username))]
     (if (and found-password (= found-password password))
       (let [next-url (get-in request [:query-params :next] "/")
-            updated-session (assoc session :identity (keyword username))]
+            updated-session (assoc session :identity (keyword username) :role 0)]
         (-> (redirect next-url)
             (assoc :session updated-session)))
       (redirect "/login/"))))
