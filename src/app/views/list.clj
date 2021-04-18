@@ -19,7 +19,7 @@
                       (navbar (table pages) request)]
                      [:div {:class "hero-body"}
                       [:div {:class "container"}
-                       (let [[head & data] (model/read-whole-table table)]
+                       (let [[head & data] (model/read-table-with-fk-substitution table)]
                          [:table {:class "table is-hoverable is-fullwidth"}
                           [:thead
                            (into [] (concat [:tr] (mapv (fn [x] [:th (localization/line x)]) head)))]
