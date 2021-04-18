@@ -14,13 +14,16 @@
             [app.views.layout :refer [four-oh-four]]
             [app.views.home :refer [home]]
             [app.views.login :refer [login]]
+            [app.views.list :refer [show-list]]
             
-            [app.controllers.login :refer [login-auth]]))
+            [app.controllers.login :refer [login-auth logout]]))
 
 (defroutes routes
   (GET "/" [] home)
-  (GET "/login/" [] login)
-  (POST "/login/" [] login-auth)
+  (GET "/login" [] login)
+  (POST "/login" [] login-auth)
+  (GET "/logout" [] logout)
+  (GET "/list/:table" [] show-list)
   (route/not-found (four-oh-four)))
 
 (defn -main []
@@ -31,5 +34,5 @@
       (wrap-params $)
       (wrap-session $)
       (wrap-reload $)
-      (jetty/run-jetty $ {:port 8080 :join? false}))))
+      (jetty/run-jetty $ {:port 3000 :join? false}))))
 

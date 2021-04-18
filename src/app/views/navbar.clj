@@ -2,25 +2,25 @@
   (:require [hiccup.page :as h]))
 
 (def pages
-  [["ТС" "vehicle"]
-   ["Владелец ТС" "owner"]
-   ["Паспорт ТС" "passport"]
-   ["Страховой полис" "policy"]
-   ["Карточка учета ДТП" "accident_card"]
-   ["Свидетельство о регистрации" "reg_cert"]
-   ["Заявка на регистрацию" "reg_assignment"]
-   ["Заявление об угоне ТС" "theft_stmt"]])
+  {:vehicle "ТС"
+   :car_owner "Владелец ТС" 
+   :vehicle_passport "Паспорт ТС" 
+   :insurance_policy "Страховой полис"
+   :accident_card "Карточка учета ДТП" 
+   :registration_certificate "Свидетельство о регистрации" 
+   :registration_application "Заявка на регистрацию"
+   :theft_statement "Заявление об угоне ТС"})
 
 (def dropdown-add
   (mapv
-   (fn [[caption name]]
-     [:a {:class "navbar-item"} caption])
+   (fn [[k v]]
+     [:a {:class "navbar-item" :href (format "/add/%s" (name k))} v])
    pages))
 
 (def dropdown-list
   (mapv
-   (fn [[caption name]]
-     [:a {:class "navbar-item"} caption])
+   (fn [[k v]]
+     [:a {:class "navbar-item" :href (format "/list/%s" (name k))} v])
    pages))
 
 (defn navbar [title request]
@@ -36,7 +36,11 @@
       [:a {:class "navbar-link"} "Списки"]
       (into [] (concat [:div {:class "navbar-dropdown"}] dropdown-list))]]
     [:div {:class "navbar-end"}
-     [:div {:class "navbar-item has-dropdown is-hoverable"}
-      [:a {:class "navbar-link"} (format "%s" (get request :session))]
-      [:div {:class "navbar-dropdown"}
-       [:a {:class "navbar-item"} "Выход"]]]]]])
+     (let [{name :full_name
+            position :name} (-> request :session :identity)]
+       [:div {:class "navbar-item has-dropdown is-hoverable"}
+        [:a {:class "navbar-link"} name]
+        [:div {:class "navbar-dropdown"}
+         [:a {:class "navbar-item has-text-weight-bold"} "Должность"]
+         [:a {:class "navbar-item"} position]
+         [:a {:class "navbar-item" :href "/logout"} "Выход"]]])]]])

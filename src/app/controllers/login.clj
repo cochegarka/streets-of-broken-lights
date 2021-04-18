@@ -1,19 +1,22 @@
 (ns app.controllers.login
-  (:require [ring.util.response :refer [redirect]]))
-
-(def ^:private authdata
-  {:admin "secret"
-   :test "secret"})
+  (:require [ring.util.response :refer [redirect]]
+            [app.models.depot :as model]))
 
 (defn login-auth
   [request]
   (let [username (get-in request [:form-params "username"])
         password (get-in request [:form-params "password"])
-        session (:session request)
-        found-password (get authdata (keyword username))]
-    (if (and found-password (= found-password password))
+        session (:session request)]
+    (if (model/login username password)
       (let [next-url (get-in request [:query-params :next] "/")
-            updated-session (assoc session :identity (keyword username) :role 0)]
+            session-data (-> (model/login-info username) first)
+            updated-session (assoc session :identity session-data)]
         (-> (redirect next-url)
             (assoc :session updated-session)))
-      (redirect "/login/"))))
+      (redirect "/login"))))
+
+(defn logout
+  [request]
+  (-> (redirect "/login")
+      (assoc :session {})))
+
