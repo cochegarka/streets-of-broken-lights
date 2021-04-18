@@ -51,3 +51,7 @@
         head (into [] (drop-last fk-count head))
         body (mapv (fn [x] (into [] (concat (take (- (count x) fk-count fk-count) x) (take-last fk-count x)))) body)]
     (-> (cons head body) (into []))))
+
+(defn describe-table [table]
+  (j/query app.models.depot/spec [(format "SELECT column_name, data_type FROM information_schema.columns WHERE table_name='%s'" (name table))] {:as-arrays? true}))
+

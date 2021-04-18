@@ -29,6 +29,7 @@
     [:div {:class "navbar-item has-text-weight-bold"} title]]
    [:div {:id "app-navbar" :class "navbar-menu"}
     [:div {:class "navbar-start"}
+     [:a {:class "navbar-item is-hoverable" :href "/"} "Главная"]
      [:div {:class "navbar-item has-dropdown is-hoverable"}
       [:a {:class "navbar-link"} "Добавление"]
       (into [] (concat [:div {:class "navbar-dropdown"}] dropdown-add))]
