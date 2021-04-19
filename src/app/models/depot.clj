@@ -32,6 +32,7 @@
 (def foreign-keys
   {:vehicle {:car_owner :full_name}
    :accident_card {:employee :full_name}
+   :accident_participants {:vehicle :car_model :accident_card :issue_date}
    :vehicle_passport {:vehicle :car_model}
    :insurance_policy {:car_owner :full_name :vehicle :car_model}
    :registration_certificate {:employee :full_name :car_owner :full_name :registration_application :id}

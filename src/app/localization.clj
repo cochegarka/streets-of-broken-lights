@@ -35,6 +35,7 @@
    :appliance_date "Дата подачи"
    :status "Статус"
    :detailed_info "Детали происшествия"
+   :id_accident_card "ДТП"
    })
 
 (defn line [k]

@@ -6,7 +6,8 @@
    :car_owner "Владелец ТС" 
    :vehicle_passport "Паспорт ТС" 
    :insurance_policy "Страховой полис"
-   :accident_card "Карточка учета ДТП" 
+   :accident_card "Карточка учета ДТП"
+   :accident_participants "Участники ДТП"
    :registration_certificate "Свидетельство о регистрации" 
    :registration_application "Заявка на регистрацию"
    :theft_statement "Заявление об угоне ТС"})
