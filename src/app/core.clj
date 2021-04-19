@@ -15,9 +15,13 @@
             [app.views.home :refer [home]]
             [app.views.login :refer [login]]
             [app.views.list :refer [show-list]]
-            [app.views.add :refer [add add-post]]
+            [app.views.add :refer [add]]
+            [app.views.edit :refer [edit]]
             
-            [app.controllers.login :refer [login-auth logout]]))
+            [app.controllers.login :refer [login-auth logout]]
+            [app.controllers.add :refer [add-post]]
+            [app.controllers.delete :refer [delete]]
+            [app.controllers.edit :refer [edit-post]]))
 
 (defroutes routes
   (GET "/" [] home)
@@ -27,6 +31,9 @@
   (GET "/list/:table" [] show-list)
   (GET "/add/:table" [] add)
   (POST "/add/:table" [] add-post)
+  (GET "/delete/:table/:id" [] delete)
+  (GET "/edit/:table/:id" [] edit)
+  (POST "/edit/:table/:id" [] edit-post)
   (route/not-found (four-oh-four)))
 
 (defn -main []

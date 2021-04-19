@@ -29,7 +29,7 @@
    :id_employee "Сотрудник ГИБДД"
    :registration_number "Регистрационный номер"
    :registration_date "Дата регистрации"
-   :id_registration_application "Заявление о регистрации"
+   :id_registration_application "Заявка на регистрацию"
    :receipt_number "Номер квитанции об оплате пошлины"
    :brief_info "Характеристика ТС"
    :appliance_date "Дата подачи"

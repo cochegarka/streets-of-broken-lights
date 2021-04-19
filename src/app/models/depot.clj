@@ -53,9 +53,31 @@
     (-> (cons head body) (into []))))
 
 (defn describe-table [table]
-  (j/query app.models.depot/spec [(format "SELECT column_name, data_type FROM information_schema.columns WHERE table_name='%s'" (name table))] {:as-arrays? true}))
+  (j/query spec [(format "SELECT column_name, data_type FROM information_schema.columns WHERE table_name='%s'" (name table))] {:as-arrays? true}))
 
 (defn read-ids-and-alias [ft]
   (mapv (fn [x] (into [] (take 2 x)))
         (rest
-         (j/query app.models.depot/spec [(format "SELECT * FROM %s" ft)] {:as-arrays? true}))))
+         (j/query spec [(format "SELECT * FROM %s" ft)] {:as-arrays? true}))))
+
+(defn parse-form-value [v]
+  (try
+    (Integer/parseInt v)
+    (catch Exception e
+      (try
+        (-> v java.time.LocalDate/parse java.sql.Date/valueOf)
+        (catch Exception e v)))))
+
+(defn insert-from-form [table form]
+  (let [form (reduce-kv #(assoc %1 (keyword %2) (parse-form-value %3)) {} form)]
+    (j/insert! spec table form)))
+
+(defn update-from-form [table id form]
+  (let [form (reduce-kv #(assoc %1 (keyword %2) (parse-form-value %3)) {} form)]
+    (j/update! spec table form ["id = ?" id])))
+
+(defn delete [table id]
+  (j/delete! spec table ["id = ?" id]))
+
+(defn get-row-by-id [table id]
+  (first (j/query spec [(format "SELECT * FROM %s WHERE id = %d" table id)])))

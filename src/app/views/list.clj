@@ -31,5 +31,6 @@
                                     (into []
                                           (concat
                                            [:tr]
-                                           (mapv (fn [x]
-                                                   [:td x]) x)))) data)))])]]]))))
+                                           (mapv (fn [xx]
+                                                   [:td [:a {:href (str "/edit/" (name table) "/" (first x))} xx]]) x)
+                                           [[:td [:a {:href (str "/delete/" (name table) "/" (first x))} [:span {:class "icon"} [:i {:class "fas fa-trash"}]]]]]))) (sort-by first data))))])]]]))))
