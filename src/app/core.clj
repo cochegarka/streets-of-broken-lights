@@ -15,7 +15,7 @@
             [app.views.home :refer [home]]
             [app.views.login :refer [login]]
             [app.views.list :refer [show-list]]
-            [app.views.add :refer [add]]
+            [app.views.add :refer [add add-post]]
             
             [app.controllers.login :refer [login-auth logout]]))
 
@@ -26,6 +26,7 @@
   (GET "/logout" [] logout)
   (GET "/list/:table" [] show-list)
   (GET "/add/:table" [] add)
+  (POST "/add/:table" [] add-post)
   (route/not-found (four-oh-four)))
 
 (defn -main []

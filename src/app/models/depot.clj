@@ -55,3 +55,7 @@
 (defn describe-table [table]
   (j/query app.models.depot/spec [(format "SELECT column_name, data_type FROM information_schema.columns WHERE table_name='%s'" (name table))] {:as-arrays? true}))
 
+(defn read-ids-and-alias [ft]
+  (mapv (fn [x] (into [] (take 2 x)))
+        (rest
+         (j/query app.models.depot/spec [(format "SELECT * FROM %s" ft)] {:as-arrays? true}))))
